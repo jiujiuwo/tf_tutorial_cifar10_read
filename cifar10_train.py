@@ -64,11 +64,14 @@ def train():
     # Get images and labels for CIFAR-10.
     # Force input pipeline to CPU:0 to avoid operations sometimes ending up on
     # GPU and resulting in a slow down.
+    # 获取CIFAR-10的图像和标签。 强制输入管道到CPU：0以避免有时会在GPU上结束并导致减速的操作。
     with tf.device('/cpu:0'):
       images, labels = cifar10.distorted_inputs()
 
     # Build a Graph that computes the logits predictions from the
     # inference model.
+    # 构建一个graph，用于计算推理模型中的logits预测。
+    # logits: 未归一化的概率， 一般也就是 softmax的输入
     logits = cifar10.inference(images)
 
     # Calculate loss.
@@ -76,6 +79,7 @@ def train():
 
     # Build a Graph that trains the model with one batch of examples and
     # updates the model parameters.
+    # 构建一个graph，通过一批示例来训练模型并更新模型参数。
     train_op = cifar10.train(loss, global_step)
 
     class _LoggerHook(tf.train.SessionRunHook):
